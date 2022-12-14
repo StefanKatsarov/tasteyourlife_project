@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nav-link:hover {
+    color: rgb(59, 181, 199) !important;
+}
+
+.nav-link {
+    width: 100%;
+    color: white;
+    font-size: 25px;
+}
+
+.figure {
+    background: black;
+}
+
+
+.white-text {
+    width: 100%;
+    color: white !important;
+    font-size: 25px;
+}
+
+.card-img-top img {
+    border-radius: 50%;
+    border: 10px solid !important;
+
+}
+
+.logo-padding {
+    padding-top: 30px;
+    padding-left: 0;
+}
+
+.resize {
+    height: 180px;
+    object-fit: cover;
+}
+
+.recipe-border {
+    border: black;
+}
+
+.perf-size-photo {
+    object-fit: none!important;
+}
