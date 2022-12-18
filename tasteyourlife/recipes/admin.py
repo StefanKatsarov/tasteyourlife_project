@@ -5,4 +5,6 @@ from tasteyourlife.recipes.models import Recipe
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'id', 'user')
+    list_filter = ('user_id',)
+

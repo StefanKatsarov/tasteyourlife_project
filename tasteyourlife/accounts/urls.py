@@ -1,6 +1,7 @@
 from django.urls import path, include
 
-from tasteyourlife.accounts.views import profile_edit, SignUpView, SignOutView, ProfileView, SignInView
+from tasteyourlife.accounts.views import ProfileEditView, SignUpView, SignOutView, ProfileView, SignInView, \
+    ProfileDeleteView
 
 urlpatterns = [
     path('sign-up/', SignUpView.as_view(), name='sign up'),
@@ -8,6 +9,7 @@ urlpatterns = [
     path('sign-out/', SignOutView.as_view(), name='sign out'),
     path('profile/<int:pk>/', include([
         path('', ProfileView.as_view(), name='profile details'),
-        path('edit/', profile_edit, name='profile edit')
+        path('edit/', ProfileEditView.as_view(), name='profile edit'),
+        path('delete', ProfileDeleteView.as_view(), name='profile delete'),
     ]))
 ]

@@ -14,15 +14,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %} ">
 </head>
 <body>
-{#<div class="form-row">#}
-{#    <form action="{% url 'sign in' %}" method="post">#}
-{#        {{ form.as_p }}#}
-{#        <button type="submit">#}
-{#            Sign in#}
-{#        </button>#}
-{#        {% csrf_token %}#}
-{#    </form>#}
-{#</div>#}
 <div class="main">
     <!-- Sing in  Form -->
     <section class="sign-in">
@@ -38,7 +29,7 @@
                     <h2 class="form-title">Sign in</h2>
                     <form method="POST" class="register-form" id="login-form" action="{% url 'sign in' %}">
                         <div class="form-group">
-                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <label  for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             {{ form.username }}
 
                         </div>
@@ -62,5 +53,5 @@
 <!-- JS -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

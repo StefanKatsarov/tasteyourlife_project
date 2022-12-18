@@ -1,0 +1,69 @@
+{% extends 'partials/base-template.html' %}
+{% load static %}
+{% block page_content %}
+    <div class="container pb-3">
+        <div>
+            <form id="add-recipe" method="post" action="{% url 'add recipe' %}" enctype="multipart/form-data"
+                  class="row pt-5  full-width">
+                <div class="col-12">
+                    {{ form.name.label }}
+                    {{ form.name }}
+                    {{ form.name.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.category.label }}
+                    {{ form.category }}
+                    {{ form.category.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.subcategory.label }}
+                    {{ form.subcategory }}
+                    {{ form.subcategory.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.cooking_method.label }}
+                    {{ form.cooking_method }}
+                    {{ form.cooking_method.errors }}
+                </div>
+                <div class="col-12 pt-3">
+                    {{ form.ingredients.label }}
+                    {{ form.ingredients }}
+                    {{ form.ingredients.errors }}
+                </div>
+                <div class="col-12 pt-3">
+                    {{ form.instructions.label }}
+                    {{ form.instructions }}
+                    {{ form.instructions.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.servings.label }}
+                    {{ form.servings }}
+                    {{ form.servings.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.preparation_time.label }}
+                    {{ form.preparation_time }}
+                    {{ form.preparation_time.errors }}
+                </div>
+                <div class="col-4 pt-3">
+                    {{ form.cooking_time.label }}
+                    {{ form.cooking_time }}
+                    {{ form.cooking_time.errors }}
+                </div>
+                <div class="col-6 pt-3 pb-4">
+                    {{ form.difficulty.label }}
+                    {{ form.difficulty }}
+                    {{ form.difficulty.errors }}
+                </div>
+                <div class="col-6 pt-3 pb-4">
+                    {{ form.photo.label }}
+                    {{ form.photo }}
+                    {{ form.photo.errors }}
+                </div>
+
+                <button class="btn btn-outline-dark" type="submit">Add Recipe</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

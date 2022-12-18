@@ -1,7 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title></title></head>
-<body>
-</body>
-</html>
+<div class="col-6">
+    <div class="card mb-3 mt-5 ms-5" style="max-width: 35rem;">
+        <div class="row g-0 border border-dark border-5">
+            <div class="col-md-4">
+                <img src="/media/{{ recipe.photo }}" class="img-fluid rounded-start resize"
+                     alt="recipe-photo">
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <h6 class="card-title">{{ recipe.name }}</h6>
+                    <ul class="pt-1">
+                        {% if recipe.total_time_in_minutes <= 60 %}
+                            <li class="card-text">Ready in: {{ recipe.total_time_in_minutes }} minutes</li>
+                        {% else %}
+                            <li class="card-text">Ready in: {{ recipe.total_time_above_hour }} hours</li>
+                        {% endif %}
+                        <li class="card-text">Ingredients: {{ recipe.number_of_ingredients }}</li>
+                        <li class="card-text">Servings: {{ recipe.servings }}</li>
+                        {% if recipe.difficulty == 'hard' %}
+                            <li class="card-text">Difficulty: Hard</li>
+                        {% elif recipe.difficulty == 'easy' %}
+                            <li class="card-text">Difficulty: Easy</li>
+                        {% elif recipe.difficulty == 'expert' %}
+                            <li class="card-text">Difficulty: Expert</li>
+                        {% elif recipe.difficulty == 'normal' %}
+                            <li class="card-text">Difficulty: Normal</li>
+                        {% endif %}
+                    </ul>
+                    <a class="stretched-link" href="{% url 'recipe details' pk=recipe.pk %}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

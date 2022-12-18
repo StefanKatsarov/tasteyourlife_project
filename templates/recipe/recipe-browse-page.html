@@ -1,0 +1,149 @@
+{% extends 'partials/base-template.html' %}
+{% load static %}
+{% block page_content %}
+    <div class="main-area">
+        <div class="product-cards">
+            <div class="utility">
+                    <form method="GET" action="{% url 'browse recipes' %}" class="d-flex pt-3 ">
+                        <input class="form-control me-2 border border-dark" name="search" id="search" type="search" placeholder="Search recipe's name or recipe's ingredient"
+                               aria-label="Search">
+                        <button class="btn border border-dark" type="submit">Search</button>
+                    </form>
+                <div class="container center">
+                    <div class="row pt-3">
+                        <select class="col me-2" name="category" id="category-list"
+                                onchange="location.href = finalurlcategory();"
+                                style="margin-left: auto;">
+                            <option value="" id="category-placeholder" disabled selected hidden>Category</option>
+                            <option id="beef_recipes" value="beef_recipes">Beef recipes</option>
+                            <option id="chicken_recipes" value="chicken_recipes">Chicken recipes</option>
+                            <option id="pork_recipes" value="pork_recipes">Pork recipes</option>
+                            <option id="lamb_recipes" value="lamb_recipes">Lamb recipes</option>
+                            <option id="stir_fry" value="stir_fry">Stir fries</option>
+                            <option id="sushi" value="sushi">Sushi</option>
+                            <option id="soup" value="soup">Soups</option>
+                            <option id="dessert" value="dessert">Desserts</option>
+                            <option id="salad" value="salad">Salads</option>
+                            <option id="appetizers" value="appetizers">Appetizers</option>
+                            <option id="pasta" value="pasta">Pasta</option>
+                            <option id="snacks" value="snacks">Snacks</option>
+                            <option id="sea_food" value="sea_food">Sea food</option>
+                            <option id="sandwiches" value="sandwiches">Sandwiches</option>
+                            <option id="pizza" value="pizza">Pizza</option>
+                            <option id="other" value="other">Other</option>
+                        </select>
+
+                        <select class="col me-2" name="subcategory" id="subcategory-list"
+                                onchange="location.href = finalurlsubcategory();"
+                                style="margin-left: auto;">
+                            <option value="" id="subcategory-placeholder" disabled selected hidden>Subcategory</option>
+                            <option id="none" value="none">None</option>
+                            <option id="vegan" value="vegan">Vegan</option>
+                            <option id="vegetarian" value="vegetarian">Vegetarian</option>
+                            <option id="dairy_free" value="dairy_free">Dairy-free</option>
+                            <option id="gluten_free" value="gluten_free">Gluten-free</option>
+
+                        </select>
+
+                        <select class="col me-2 " name="cooking_method" id="cooking-method-list"
+                                onchange="location.href = finalurlcooking_method();"
+                                style="margin-left: auto;">
+                            <option value="" id="cooking-method-placeholder" disabled selected hidden>Cooking method
+                            </option>
+                            <option id="bake" value="bake">Bake</option>
+                            <option id="fry" value="fry">Fry</option>
+                            <option id="grill" value="grill">Grill</option>
+                            <option id="saute" value="saute">Saute</option>
+                            <option id="steam" value="steam">Steam</option>
+                            <option id="boil" value="boil">Boil</option>
+                            <option id="deep_fry" value="deep_fry">Deep fry</option>
+                            <option id="other" value="other">Other</option>
+                        </select>
+
+                        <select class="col me-2" name="difficulty" id="difficulty-list"
+                                onchange="location.href = finalurldifficulty();"
+                                style="margin-left: auto;">
+                            <option value="" id="difficulty-placeholder" disabled selected hidden>Difficulty</option>
+                            <option id="easy" value="easy">Easy</option>
+                            <option id="normal" value="normal">Normal</option>
+                            <option id="hard" value="hard">Hard</option>
+                            <option id="expert" value="expert">Expert</option>
+                        </select>
+
+                        <select class="col me-2" name="sort" id="sort-list" onchange="location.href = finalurlsort();"
+                                style="margin-left: auto;">
+                            <option value="" id="placeholder" disabled selected hidden>Sort by</option>
+                            <option id="-date_added" value="-date_added">Newest recipes</option>
+                            <option id="cooking_time" value="cooking_time">Cooking time: Low To High</option>
+                            <option id="-cooking_time" value="-cooking_time">Cooking time: High To Low</option>
+                            <option id="name" value="name">Product Name</option>
+
+                        </select>
+
+                        <div class="row border-dark justify-content-center pt-3">
+                            <div class="col-2 text-center">
+                            <a class="dark-text border border-dark border-5" href="{% url 'browse recipes' %}"> Reset filters</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container center">
+                <div class="row">
+                    {% for recipe in recipes %}
+                        {% include 'partials/recipe-item.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if is_paginated %}
+                <div class="container">
+                    <div class="d-flex justify-content-center pt-3">
+                        <nav class="pagination">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" tabindex="-1" aria-disabled="true"
+                                           href="{% url 'browse recipes' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    {% if i == page_obj.number %}
+                                        <li class="page-item active" aria-current="page">
+                                            <a class="page-link "
+                                               href="{% url 'browse recipes' %}?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="{% url 'browse recipes' %}?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" tabindex="-1"
+                                           href="/templates/recipe/recipe-browse-page.html/?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#search").autocomplete({
+            source: '{% url 'suggestionapi' %}',
+            minLength: 2
+        });
+    });
+</script>

@@ -1,6 +1,6 @@
 from enum import Enum
 
-from django.contrib.auth import models as auth_models
+from django.contrib.auth import models as auth_models, password_validation
 from django.db import models
 from django.utils import timezone
 
@@ -12,6 +12,7 @@ class ExperienceLevel(ChoicesEnumMixin, Enum):
     amateur = "Amateur"
     home_cook = 'Home Cook'
     expert = 'Expert'
+    professional = 'Professional chef'
 
 
 class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
@@ -32,6 +33,12 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = AppUserManager()
+
+    @property
+    def user_profile(self):
+        profile = Profile.objects.filter(user_id=self.id).get()
+
+        return profile
 
 
 class Profile(models.Model):
@@ -58,7 +65,9 @@ class Profile(models.Model):
 
     experience_level = models.CharField(
         choices=ExperienceLevel.choices(),
-        max_length=ExperienceLevel.max_len()
+        max_length=ExperienceLevel.max_len(),
+        null=True,
+        blank=True
     )
 
     about_me = models.TextField(

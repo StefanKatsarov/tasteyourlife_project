@@ -1,4 +1,43 @@
 {% extends 'partials/base-template.html' %}
 {% load static %}
 {% block page_content %}
+    <div class="container pb-3">
+        <div>
+            <form method="post" action="{% url 'profile edit' pk=user.pk %}" enctype="multipart/form-data"
+                  class="row pt-5  full-width">
+                <div class="col-6">
+                    {{ form.first_name.label }}
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="col-6">
+                    {{ form.last_name.label }}
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
+                <div class="col-6 pt-3">
+                    {{ form.age.errors }}
+                    {{ form.age.label }}
+                    {{ form.age }}
+                </div>
+                <div class="col-6 pt-3">
+                    {{ form.experience_level.label }}
+                    {{ form.experience_level }}
+                    {{ form.experience_level.errors }}
+                </div>
+                <div class="col-12 pt-3">
+                    {{ form.about_me.label }}
+                    {{ form.about_me }}
+                    {{ form.about_me.errors }}
+                </div>
+                <div class="col-12 pt-3 pb-4">
+                    {{ form.photo.label }}
+                    {{ form.photo }}
+                    {{ form.photo.errors }}
+                </div>
+                <button class="btn btn-outline-dark" type="submit">Save changes</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

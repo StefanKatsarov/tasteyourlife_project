@@ -7,7 +7,7 @@ class RecipeBaseForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ('name', 'category', 'subcategory', 'cooking_method', 'ingredients', 'instructions', 'servings',
-                  'preparation_time', 'cooking_time', 'experience_level', 'photo')
+                  'preparation_time', 'cooking_time', 'photo', 'difficulty')
 
         labels = {
             'name': "Recipe Name:",
@@ -19,14 +19,15 @@ class RecipeBaseForm(forms.ModelForm):
             'servings': 'Servings:',
             'preparation_time': 'Preparation Time /minutes/:',
             'cooking_time': 'Cooking Time /minutes/:',
-            'experience_level': 'Experience Level:',
-            'photo': 'Upload a photo of the recipe:'
+            'photo': 'Upload a photo of the recipe:',
+            'difficulty': 'Difficulty level:'
         }
 
         widgets = {
             'name': forms.TextInput(
                 attrs={
-                    'class': "form-control"
+                    'class': "form-control",
+                    'placeholder': "Enter recipe name"
                 }
             ),
             'category': forms.Select(
@@ -46,12 +47,15 @@ class RecipeBaseForm(forms.ModelForm):
             ),
             'ingredients': forms.Textarea(
                 attrs={
-                    'class': "form-control"
+                    'class': "form-control",
+                    'placeholder': "Enter one ingredient on each new line. For example:\nPotatoes - 600 g "
+                                   "\nSalt - 1 tbsp"
                 }
             ),
             'instructions': forms.Textarea(
                 attrs={
-                    'class': "form-control"
+                    'class': "form-control",
+                    'placeholder': 'Enter detailed instruction for preparing the recipe'
                 }
             ),
             'servings': forms.NumberInput(
@@ -74,4 +78,10 @@ class RecipeBaseForm(forms.ModelForm):
                     'class': "form-control"
                 }
             ),
+            'difficulty': forms.Select(
+                attrs={
+                    'class': "form-control"
+                }
+            ),
         }
+

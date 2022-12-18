@@ -9,44 +9,72 @@
     <title>Index</title>
     <link rel="stylesheet"
           href="{% static 'css/style_nav.css' %}">
+    <script>
+    // for getting the sorting status to be displayed in sorting dropdown placeholder
+    function get(name) {
+        if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+            return decodeURIComponent(name[1]);
+    }
+
+    if (get('ordering'))
+        document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML;
+
+    if (get('price'))
+        document.getElementById('filters-placeholder').innerHTML = "Filters: " + document.getElementById(get('filters')).innerHTML;
+
+
+    // for getting url after applying ordering
+    function finalurlsort() {
+        var url = new URL(window.location.href);
+        var search_params = url.searchParams;
+        search_params.set('ordering', document.getElementById("sort-list").value);
+        url.search = search_params.toString();
+        var new_url = url.toString();
+        return new_url
+    }
+
+    // for getting url after applying price filtering
+    function finalurlcategory() {
+        var url = new URL(window.location.href);
+        var search_params = url.searchParams;
+        search_params.set('category', document.getElementById("category-list").value);
+        url.search = search_params.toString();
+        var new_url = url.toString();
+        return new_url
+    }
+
+    function finalurlsubcategory() {
+        var url = new URL(window.location.href);
+        var search_params = url.searchParams;
+        search_params.set('subcategory', document.getElementById("subcategory-list").value);
+        url.search = search_params.toString();
+        var new_url = url.toString();
+        return new_url
+    }
+
+    function finalurlcooking_method() {
+        var url = new URL(window.location.href);
+        var search_params = url.searchParams;
+        search_params.set('cooking-method', document.getElementById("cooking-method-list").value);
+        url.search = search_params.toString();
+        var new_url = url.toString();
+        return new_url
+    }
+
+    function finalurldifficulty() {
+        var url = new URL(window.location.href);
+        var search_params = url.searchParams;
+        search_params.set('difficulty', document.getElementById("difficulty-list").value);
+        url.search = search_params.toString();
+        var new_url = url.toString();
+        return new_url
+    }
+</script>
 </head>
 <body>
 <header>
     {% include 'partials/nav-bar.html' %}
 </header>
-{% include 'partials/logo.html' %}
-<div class="container">
-    <div  class="border border-dark border-5">
-        <div class="row">
-            <img src="/media/{{ profile.photo }}" alt="prof-pic" class="mb-3" style="max-width: 400px;">
-            <div class="col-8">
-                <div class="row">
-                    <div class="col-4">
-                        {{ profile.first_name }} {{ profile.last_name }}
-                    </div>
-                    <div class="col-4">
-                        {{ profile.age }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    {{ profile.experience_level }}
-                </div>
-                <div class="col-6">
-                    {{ object.user.date_joined }}
-                </div>
-                <div class="col-12">
-                    {{ profile.about_me }}
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div>
-    <a class="link" href="{% url 'sign out' %}">Log out</a>
-</div>
 
 <main>
     {% block page_content %}

@@ -6,7 +6,7 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse ps-5" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
@@ -15,7 +15,7 @@
                         <a class="nav-link" href="{% url 'browse recipes' %}">Browse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Random</a>
+                        <a class="nav-link" href="{% url 'all articles' %}">Articles</a>
                     </li>
                     <li class="nav-item">
                         {% if user.is_authenticated %}

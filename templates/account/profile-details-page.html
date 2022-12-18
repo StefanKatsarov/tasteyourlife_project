@@ -1,5 +1,85 @@
 {% extends 'partials/base-template.html' %}
 {% load static %}
 {% block page_content %}
+    {% include 'partials/logo.html' %}
 
+    <div class="container">
+        <div class="border border-dark border-5">
+            {% if request.user.id == profile.user_id %}
+                <a class="pull-right" href="{% url 'sign out' %}">
+                    <img class="img-fluid" width="30" src="{% static 'images/exit_button.png' %}" alt="sign-out">
+                </a>
+                <a class="pull-right" href="{% url 'profile edit' pk=user.pk %}">
+                    <img class="img-fluid" width="30" src="{% static 'images/edit_button.png' %}" alt="edit-profile">
+                </a>
+                <a class="pull-right" href="{% url 'profile delete' pk=user.pk %}">
+                    <img class="img-fluid" width="30" src="{% static 'images/delete-icon.png' %}" alt="delete-profile">
+                </a>
+                <a class="pull-right" href="{% url 'article create' %}">
+                    <img class="img-fluid" width="30" src="{% static 'images/add-article.png' %}" alt="article-create">
+                </a>
+            {% endif %}
+            <div class="row">
+                <div class="col-4 border-end border-dark" style="width: 18rem;">
+                    {% if profile.photo %}
+                        <img src="/media/{{ profile.photo }}" alt="prof-pic"
+                             class="mb-3 mt-2 border border-dark avatar"
+                             style="max-width: 200px;">
+                    {% else %}
+                        <img src="{% static 'images/profpciture.jpg' %}" alt="prof-pic"
+                             class="mb-3 mt-2 border border-dark avatar"
+                             style="max-width: 200px;">
+                    {% endif %}
+                </div>
+                <div class="col-8">
+                    <div class="row fs-5 ps-5">
+                        <div class="col-6 pt-3">
+                            <label for="full-name" class="fw-bold"> Name:</label>
+                            {% if profile.first_name and profile.last_name %}
+                                {{ profile.first_name }} {{ profile.last_name }}
+                            {% elif profile.first_name %}
+                                {{ profile.first_name }}
+                            {% elif profile.last_name %}
+                                {{ profile.last_name }}
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </div>
+                        <div class="col-6 pt-3">
+                            <label for="age" class="fw-bold"> Age:</label>
+                            {% if profile.age %}
+                                {{ profile.age }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </div>
+                        <div class="col-6 pt-3">
+                            <label for="experience-level" class="fw-bold"> Experience level:</label>
+                            {% if profile.experience_level == 'amateur' %}
+                                Amateur
+                            {% elif profile.experience_level == 'home_cook' %}
+                                Home Cook
+                            {% elif profile.experience_level == 'expert' %}
+                                Expert
+                            {% elif profile.experience_level == 'professional' %}
+                                Professional chef
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </div>
+                        <div class="col-6 pt-3">
+                            <label class="fw-bold" for="date-joined"> Date joined:</label>
+                            {{ object.user.date_joined }}
+                        </div>
+                        <div class="col-12 pt-4">
+                            {% if profile.about_me %}
+                                <h4>About me:</h4>
+                                {{ profile.about_me }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

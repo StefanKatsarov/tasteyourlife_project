@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from tasteyourlife.accounts.forms import SignUpForm
+from tasteyourlife.accounts.forms import SignUpForm, ProfileEditForm
 from tasteyourlife.accounts.models import Profile
 
 UserModel = get_user_model()
@@ -26,8 +26,35 @@ class ProfileView(views.DetailView, LoginRequiredMixin):
         return context
 
 
-def profile_edit(request):
-    return render(request, 'account/profile-edit-page.html')
+class ProfileEditView(views.UpdateView, LoginRequiredMixin):
+    template_name = 'account/profile-edit-page.html'
+    model = Profile
+    form_class = ProfileEditForm
+
+    def get_success_url(self):
+        return reverse_lazy('profile details', kwargs={
+            'pk': self.request.user.pk
+        })
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse_lazy('sign in'))
+        if request.user.id != kwargs.get('pk'):
+            return redirect(reverse_lazy('url tamper'))
+        return super().dispatch(request, *args, **kwargs)
+
+
+class ProfileDeleteView(views.DeleteView, LoginRequiredMixin):
+    template_name = 'account/profile-delete-page.html'
+    model = Profile
+    success_url = reverse_lazy('index')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse_lazy('sign in'))
+        if request.user.id != kwargs.get('pk'):
+            return redirect(reverse_lazy('url tamper'))
+        return super().dispatch(request, *args, **kwargs)
 
 
 class SignUpView(views.CreateView):
@@ -55,5 +82,3 @@ class SignInView(auth_views.LoginView):
 
 class SignOutView(auth_views.LogoutView):
     template_name = 'account/sign-out.html'
-
-

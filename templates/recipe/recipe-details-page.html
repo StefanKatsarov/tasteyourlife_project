@@ -1,0 +1,127 @@
+{% extends 'partials/base-template.html' %}
+{% load static %}
+{% block page_content %}
+    {% include 'partials/logo.html' %}
+    <section>
+        <div class="container">
+            <h1>{{ recipe.name }}
+                {% if request.user.id == recipe.user_id %}
+                    <a href="{% url 'edit recipe' recipe.pk %}">
+                        <img class="img-fluid" width="30" src="{% static 'images/edit_button.png' %}"
+                             alt="edit-profile">
+                    </a>
+                    <a href="{% url 'delete recipe' recipe.pk %}">
+                        <img class="img-fluid" width="30" src="{% static 'images/delete-icon.png' %}"
+                             alt="edit-profile">
+                    </a>
+                {% endif %}
+            </h1>
+            <div class="row pt-4 ">
+                <div class="col-4">
+                    <div class="card" style="width: 10rem;">
+                        {% if recipe.user.profile.photo %}
+                            <img src="/media/{{ recipe.user.profile.photo }}" class="card-img-top" alt="...">
+                        {% else %}
+                            <img src="{% static 'images/profpciture.jpg' %}" class="card-img-top" alt="...">
+                        {% endif %}
+                        <a class="stretched-link" href="{% url 'profile details' pk=recipe.user_id %}"></a>
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card border-0" style="width: 25rem;">
+                        <img src="/media/{{ recipe.photo }}" class="card-img-top " alt="...">
+
+                    </div>
+
+                </div>
+                <div class="container text-center pt-3">
+                    <div class="row g-4 justify-content-center">
+                        <div class="card border-dark" style="width: 7rem;">
+                            <a class="" href="{% url 'like recipe' recipe_id=recipe.pk %}">
+                                {% if liked_by_user %}
+                                    <img class="card-img-top mx-auto pt-2" style="width: 3rem"
+                                         src="{% static 'images/unlike_recipe.png' %}"
+                                         alt="edit-profile">
+                                {% else %}
+                                    <img class="card-img-top mx-auto pt-2" style="width: 3rem"
+                                         src="{% static 'images/like_recipe.png' %}"
+                                         alt="edit-profile">
+                                {% endif %}
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text font_size">{{ recipe_likes }}</p>
+                            </div>
+                        </div>
+                        <div class="card border-end-0" style="width: 7rem;">
+                            <img src="{% static 'images/timer.png' %}" class="card-img-top mx-auto pt-2" alt="timer"
+                                 style="width: 2rem;">
+                            <div class="card-body">
+                                <p class="card-text font_size">Cooking time: {{ recipe.cooking_time }}</p>
+                            </div>
+                        </div>
+                        <div class="card border-start-0 border-end-0 " style="width: 7rem;">
+                            <img src="{% static 'images/timer.png' %}" class="card-img-top mx-auto pt-2" alt="timer"
+                                 style="width: 2rem;">
+                            <div class="card-body">
+                                <p class="card-text font_size">Preparation time: {{ recipe.preparation_time }}</p>
+                            </div>
+                        </div>
+                        <div class="card border-start-0 border-end-0" style="width: 7rem;">
+                            <img src="{% static 'images/total.png' %}" class="card-img-top mx-auto pt-2" alt="timer"
+                                 style="width: 2rem;">
+                            <div class="card-body">
+                                <p class="card-text font_size">Total time: {{ recipe.total_time_in_minutes }}</p>
+                            </div>
+                        </div>
+                        <div class="card border-start-0" style="width: 7rem;">
+                            <img src="{% static 'images/servings.png' %}" class="card-img-top mx-auto pt-2" alt="timer"
+                                 style="width: 2rem;">
+                            <div class="card-body">
+                                <p class="card-text font_size">Servings: {{ recipe.servings }}</p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container pt-3">
+                    <div class="row justify-content-center">
+                        <div class="col-5 figure rounded-5 text-center">
+                            <h3 style="color: white">Ingredients:</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col center-under pt-3">
+                            <ul>
+                                {% for ingredient in recipe.ingredients_list %}
+                                    <li class="fs-5">{{ ingredient }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-5 figure rounded-5  text-center">
+                            <h3 style="color: white">Instructions:</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col center-under pt-3">
+                                {% for new_line in recipe.instructions_newline %}
+                                    <p class="fs-5 pb-3">{{ new_line }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
+{% endblock %}
