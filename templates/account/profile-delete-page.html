@@ -1,0 +1,20 @@
+{% extends 'partials/base-template.html' %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-12 text-center pt-5">
+            <h2>Are you sure you want to delete your profile?</h2>
+        </div>
+        <div class="col text-center pt-3">
+            <form method="post" action="{% url 'profile delete' pk=object.pk %}">
+                {{ form.as_p }}
+                <div class="btn">
+                    <button class="delete-btn" type="submit">Delete</button>
+                </div>
+                    <a class="btn" style="width: 10rem" href="javascript:history.back()">
+                        <button type="button">Go back</button>
+                    </a>
+                    {% csrf_token %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

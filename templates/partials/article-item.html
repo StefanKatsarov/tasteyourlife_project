@@ -1,0 +1,5 @@
+<div class="col-4 border border-dark ms-3 position-relative">
+    <h2 style="text-decoration: underline">{{ article.name }}</h2>
+    {{ article.content }} .....
+    <a class="stretched-link" href="{% url 'article details' pk=article.id %}"></a>
+</div>
